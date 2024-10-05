@@ -17,7 +17,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	err := json.NewDecoder(r.Body).Decode(&user)
 
-	if err == nil {
+	if err != nil {
 		http.Error(w, "invalid input", http.StatusBadRequest)
 		return
 	}
@@ -28,5 +28,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	usersMux.Unlock()
 
 	w.WriteHeader(http.StatusCreated)
+
 	json.NewEncoder(w).Encode(user)
 }
